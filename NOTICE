@@ -1,0 +1,20 @@
+Dan Linux
+Copyright (C) 2026 Dan (t3ns4ki)
+SPDX-License-Identifier: GPL-3.0-or-later
+
+Dan Linux is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later version.
+
+Dan Linux is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+A copy of the GNU General Public License is included in LICENSE.
+If not, see <https://www.gnu.org/licenses/>.
+
+This license notice applies to the project's original code. Third-party fonts,
+libraries, logos and other assets retain their respective licenses and notices.
+See assets/inter-license.txt, assets/sources.json and, when included,
+vendor/supabase-LICENSE.txt and vendor/README.md. Project logos and names may
+also be protected trademarks of their respective owners.
