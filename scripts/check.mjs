@@ -1,0 +1,18 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import {execFileSync} from 'node:child_process';
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import {catalogSQL} from './catalog.mjs';
+const root=new URL('..',import.meta.url);
+for(const folder of ['v2','share','scripts','tests'])for(const name of fs.readdirSync(new URL(folder+'/',root)))if(name.endsWith('.js')||name.endsWith('.mjs'))execFileSync(process.execPath,['--check',new URL(folder+'/'+name,root).pathname]);
+for(const name of ['app.js','data.js','config.js'])execFileSync(process.execPath,['--check',new URL(name,root).pathname]);
+const html=fs.readFileSync(new URL('index.html',root),'utf8');
+for(const match of html.matchAll(/<script>([\s\S]*?)<\/script>/g))assert.ok(html.includes('sha256-'+crypto.createHash('sha256').update(match[1]).digest('base64')),'CSP inline hash is stale');
+const sql=fs.readFileSync(new URL('supabase/schema.sql',root),'utf8');
+assert.ok(sql.includes('-- BEGIN GENERATED CATALOG\n'+catalogSQL()+'\n-- END GENERATED CATALOG'),'SQL catalog is stale; run npm run build');
+const config=fs.readFileSync(new URL('config.js',root),'utf8');
+const context=vm.createContext({window:{}});vm.runInContext(config,context);
+assert.ok(!/sb_secret_|eyJ[A-Za-z0-9_-]{30}/.test(JSON.stringify(context.window.DAN_CONFIG)),'possible secret in public config');
+assert.ok(fs.existsSync(new URL('vendor/supabase-LICENSE.txt',root)));
+console.log('JavaScript syntax, CSP hashes, SQL catalog and public configuration checked.');

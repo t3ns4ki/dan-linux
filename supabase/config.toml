@@ -1,0 +1,5 @@
+# Local CLI identifier; select the real remote project with supabase link.
+project_id = "dan-linux"
+
+[functions.delete-account]
+verify_jwt = true
